@@ -1,0 +1,19 @@
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/learning
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      format-sql: true
+    show-sql: true  # Log the executed SQL statements
+    properties:
+      hibernate:
+        use_sql_comments: true  # Add comments to the SQL statements
+  flyway:
+    baseline-on-migrate: true
