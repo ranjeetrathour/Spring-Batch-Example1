@@ -1,20 +1,19 @@
 package com.example.batch;
 
 import com.example.modle.Transaction;
+import org.springframework.batch.core.JobParametersIncrementer;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.separator.SimpleRecordSeparatorPolicy;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -45,7 +44,10 @@ public class TransctionReader {
 
         return reader;
     }
-
+    @Bean
+    public JobParametersIncrementer incrementer() {
+        return new RunIdIncrementer(); // Ensures each run has unique parameters
+    }
     private static class CustomFieldSetMapper implements FieldSetMapper<Transaction> {
         private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
